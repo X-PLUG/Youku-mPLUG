@@ -1,5 +1,6 @@
 # Youku-mPLUG 10M Chinese Large-Scale Video Text Dataset
 Youku-mPLUG: A 10 Million Large-scale Chinese Video-Language Pre-training Dataset and Benchmarks
+[Download Link HERE](https://modelscope.cn/datasets/modelscope/Youku-AliceMind/summary)
 <p align="center">
 <img src="assets/youku_mplug_logo.png" alt="examples for youku-mplug"/>
 </p>
