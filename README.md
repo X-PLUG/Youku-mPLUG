@@ -35,7 +35,7 @@ The dataset contains 10 million videos in total, which are of high quality and d
 ## Download
 You can download all the videos through this [link](https://modelscope.cn/datasets/modelscope/Youku-AliceMind/summary) 
 
-## Citing HD-VILA
+## Citing Youku-mPLUG
 
 If you find this dataset useful for your research, please consider citing our paper.
 
