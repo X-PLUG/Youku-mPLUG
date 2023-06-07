@@ -1,5 +1,8 @@
-# Youku-mPLUG Datasets
+# Youku-mPLUG 10M Chinese Large-Scale Video Text Dataset
 Youku-mPLUG: A 10 Million Large-scale Chinese Video-Language Pre-training Dataset and Benchmarks
+<p align="center">
+<img src="assets/youku_mplug_logo.png" alt="examples for youku-mplug"/>
+</p>
 
 ## What is Youku-mPLUG?
 We release the public largest Chinese high-quality video-language dataset (10 million) named **Youku-mPLUG**, which is collected 
@@ -15,7 +18,10 @@ from a well-known Chinese video-sharing website, named Youku, with strict criter
 <font size=2 color="gray">Examples of video clips and titles in the proposed Youku-mPLUG dataset.</font>
 </p>
 
-We also provide three Chinese video-language benchmark datasets including Video-Text Retrieval, Video Category Prediction, and Video Captioning.
+We provide 3 different downstream multimodal video benchmark datasets to measure the capabilities of pre-trained models. The 3 different tasks include:
+- Video Category Prediction：Given a video and its corresponding title, predict the category of the video.
+- Video-Text Retrieval：In the presence of some videos and some texts, use video for text retrieval and text for video retrieval.
+- Video Captioning：In the presence of a video, describe the content of the video.
 <p align="center">
 <img src="assets/downstream_data.jpg" alt="examples for youku-mplug downstream dataset"/>
 </p>
