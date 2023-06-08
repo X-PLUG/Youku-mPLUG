@@ -1,6 +1,9 @@
 # Youku-mPLUG 10M Chinese Large-Scale Video Text Dataset
 Youku-mPLUG: A 10 Million Large-scale Chinese Video-Language Pre-training Dataset and Benchmarks
 [Download Link HERE](https://modelscope.cn/datasets/modelscope/Youku-AliceMind/summary)
+
+[Paper](https://arxiv.org/abs/2306.04362)
+
 <p align="center">
 <img src="assets/youku_mplug_logo.png" alt="examples for youku-mplug"/>
 </p>
@@ -38,6 +41,13 @@ The dataset contains 10 million videos in total, which are of high quality and d
 <font size=2 color="gray">The distribution of categories in Youku-mPLUG dataset.</font>
 </p>
 
+## Zero-shot Capability
+
+<p align="center">
+<img src="assets/case1.jpg" alt="case1" width="80%"/>
+<img src="assets/case2.jpg" alt="case2" width="80%"/>
+</p>
+
 
 ## Download
 You can download all the videos through this [link](https://modelscope.cn/datasets/modelscope/Youku-AliceMind/summary) 
@@ -51,7 +61,7 @@ If you find this dataset useful for your research, please consider citing our pa
     title={Youku-mPLUG: A 10 Million Large-scale Chinese Video-Language Dataset for Pre-training and Benchmarks},
     author={Haiyang Xu, Qinghao Ye, Xuan Wu, Ming Yan, Yuan Miao, Jiabo Ye, Guohai Xu, Anwen Hu, Yaya Shi, Chenliang Li, Qi Qian, Que Maofei, Ji Zhang, Xiao Zeng, Fei Huang},
     year={2023},
-    eprint={2306.xxxxx},
+    eprint={2306.04362},
     archivePrefix={arXiv},
     primaryClass={cs.CL}
 }
