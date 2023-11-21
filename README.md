@@ -52,6 +52,54 @@ The dataset contains 10 million videos in total, which are of high quality and d
 ## Download
 You can download all the videos through this [link](https://modelscope.cn/datasets/modelscope/Youku-AliceMind/summary) 
 
+## mPLUG-Video (BloomZ-7B)
+We build the mPLUG-Video model based on [mPLUG-Owl](https://github.com/X-PLUG/mPLUG-Owl). To use the model, you should first clone the mPLUG-Owl repo as 
+```bash
+git clone https://github.com/X-PLUG/mPLUG-Owl.git
+cd mPLUG-Owl/mPLUG-Owl
+```
+The instruction-tuned checkpoint is available on [HuggingFace](https://huggingface.co/MAGAer13/mplug-youku-bloomz-7b). To perform video inference you can use the following code:
+```python
+import torch
+from mplug_owl_video.modeling_mplug_owl import MplugOwlForConditionalGeneration
+from transformers import AutoTokenizer
+from mplug_owl_video.processing_mplug_owl import MplugOwlImageProcessor, MplugOwlProcessor
+
+pretrained_ckpt = 'MAGAer13/mplug-youku-bloomz-7b'
+model = MplugOwlForConditionalGeneration.from_pretrained(
+    pretrained_ckpt,
+    torch_dtype=torch.bfloat16,
+    device_map={'': 0},
+)
+image_processor = MplugOwlImageProcessor.from_pretrained(pretrained_ckpt)
+tokenizer = AutoTokenizer.from_pretrained(pretrained_ckpt)
+processor = MplugOwlProcessor(image_processor, tokenizer)
+
+# We use a human/AI template to organize the context as a multi-turn conversation.
+# <|video|> denotes an video placehold.
+prompts = [
+'''The following is a conversation between a curious human and AI assistant. The assistant gives helpful, detailed, and polite answers to the user's questions.
+Human: <|video|>
+Human: 视频中的女人在干什么？
+AI: ''']
+
+video_list = ['yoga.mp4']
+
+# generate kwargs (the same in transformers) can be passed in the do_generate()
+generate_kwargs = {
+    'do_sample': True,
+    'top_k': 5,
+    'max_length': 512
+}
+inputs = processor(text=prompts, videos=video_list, num_frames=4, return_tensors='pt')
+inputs = {k: v.bfloat16() if v.dtype == torch.float else v for k, v in inputs.items()}
+inputs = {k: v.to(model.device) for k, v in inputs.items()}
+with torch.no_grad():
+    res = model.generate(**inputs, **generate_kwargs)
+sentence = tokenizer.decode(res.tolist()[0], skip_special_tokens=True)
+print(sentence)
+```
+
 ## Citing Youku-mPLUG
 
 If you find this dataset useful for your research, please consider citing our paper.
