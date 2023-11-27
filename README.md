@@ -58,7 +58,7 @@ We build the mPLUG-Video model based on [mPLUG-Owl](https://github.com/X-PLUG/mP
 git clone https://github.com/X-PLUG/mPLUG-Owl.git
 cd mPLUG-Owl/mPLUG-Owl
 ```
-The instruction-tuned checkpoint is available on [HuggingFace](https://huggingface.co/MAGAer13/mplug-youku-bloomz-7b). To perform video inference you can use the following code:
+The instruction-tuned checkpoint is available on [HuggingFace](https://huggingface.co/MAGAer13/mplug-youku-bloomz-7b). For finetuning the model, you can refer to [mPLUG-Owl Repo](https://github.com/X-PLUG/mPLUG-Owl). To perform video inference you can use the following code:
 ```python
 import torch
 from mplug_owl_video.modeling_mplug_owl import MplugOwlForConditionalGeneration
