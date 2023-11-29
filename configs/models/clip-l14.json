@@ -1,0 +1,16 @@
+{
+    "pretrained_ckpt": "clip/clip_vit_l14.pth",
+    "img_size": 224,
+    "patch_size": 14,
+    "depth": 24,
+    "num_frames": 4,
+    "embed_dim": 1024,
+    "num_heads": 16,
+    "mlp_ratio": 4,
+    "drop_path": 0,
+    "grad_ckpt": false,
+    "stop_grad_conv1": false,
+    "use_shared_rel_pos_bias": false,
+    "use_abs_pos_emb": true,
+    "clip_model": true
+}

@@ -1,0 +1,48 @@
+train_file: 'youku_cls_train.jsonl'
+val_file: 'youku_cls_val.jsonl'
+test_file: 'youku_cls_test.jsonl'
+
+read_local_data: true
+
+# video_root: "/youku_data/data/raw_videos/"
+video_root: "cls_data"
+
+text_decoder: 'nlp_gpt3_text-generation_1.3B/'
+text_cfg: configs/models/config_gpt3_1.3B.json
+visual_cfg: 'configs/models/clip-b16.json'
+
+megatron_cfg: {
+  "world_size": 1,
+  "model_parallel_size": 8,
+  "tensor_model_parallel_size": 8,
+}
+
+batch_size: 32
+num_workers: 24
+max_length: 80
+
+freeze_vit: false
+freeze_text_decoder: true
+
+num_learnable_token: 128
+use_cls: true
+
+num_frames: 8
+num_classes: 45
+
+optimizer: {
+  lr: 2e-5,
+  opt: "AdamW",
+  weight_decay: 0.05,
+  clip_grad: 3.0,
+  opt_betas: [0.9, 0.999],
+  opt_eps: 1e-6
+}
+
+schedular: {
+  epochs: 10,
+  min_lr: 1e-6,
+  warmup_epochs: -1,
+  warmup_steps: 100,
+  lr_sched_type: "cosine"
+}

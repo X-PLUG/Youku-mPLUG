@@ -1,0 +1,11 @@
+torch
+transformers==4.14.1
+timm==0.4.9
+decord
+ftfy
+oss2
+opencv-python
+more_itertools
+colorlog
+jieba
+addict
