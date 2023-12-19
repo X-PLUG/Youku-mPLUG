@@ -5,12 +5,11 @@ import logging
 import os
 from io import BytesIO
 
-import oss2
 from torch.utils.data import Dataset
 
 from dataset.utils import pre_caption, pre_question, load_jsonl
 from .video_utils.utils import read_frames_decord, read_frames_gif
-from .video_utils.oss_info import OSS_INFO
+# from .video_utils.oss_info import OSS_INFO
 
 
 '''
@@ -55,6 +54,7 @@ class video_retrieval_dataset_train(Dataset):
 
         self.read_local_data = read_local_data
         if not self.read_local_data:
+            import oss2
             bucket_name = "xke-repo"
             auth = oss2.Auth(OSS_INFO[bucket_name]["AK"], OSS_INFO[bucket_name]["SK"])
             self.bucket = oss2.Bucket(auth, OSS_INFO[bucket_name]["ENDPOINT"], bucket_name)
@@ -131,6 +131,7 @@ class video_retrieval_dataset_eval(Dataset):
 
         self.read_local_data = read_local_data
         if not self.read_local_data:
+            import oss2
             bucket_name = "xke-repo"
             auth = oss2.Auth(OSS_INFO[bucket_name]["AK"], OSS_INFO[bucket_name]["SK"])
             self.bucket = oss2.Bucket(auth, OSS_INFO[bucket_name]["ENDPOINT"], bucket_name)

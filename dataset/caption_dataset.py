@@ -12,13 +12,12 @@ from torch.utils.data import Dataset
 from PIL import Image
 from PIL import ImageFile
 
-import oss2
 from io import BytesIO
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 Image.MAX_IMAGE_PIXELS = None
 
 from dataset.utils import pre_caption
-from dataset.video_utils.oss_info import OSS_INFO
+# from dataset.video_utils.oss_info import OSS_INFO
 
 def decode_int32(ann):
     ann = str(ann)
@@ -245,6 +244,7 @@ class pretrain_dataset_4m(Dataset):
         self.read_local_data = read_local_data
         self.image_root = image_root
         if not self.read_local_data:
+            import oss2
             bucket_name = "xxxxxx"
             auth = oss2.Auth("xxxx", "xx")
             self.bucket = oss2.Bucket(auth, "hxxxxxxxx", bucket_name)
@@ -293,6 +293,7 @@ class pretrain_dataset_laion(Dataset):
         self.read_local_data = read_local_data
         self.image_root = image_root
         if not self.read_local_data:
+            import oss2
             bucket_name = "nlp-mind"
             auth = oss2.Auth(OSS_INFO[bucket_name]["AK"], OSS_INFO[bucket_name]["SK"])
             self.bucket = oss2.Bucket(auth, OSS_INFO[bucket_name]["ENDPOINT"], bucket_name)

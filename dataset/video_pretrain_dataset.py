@@ -8,12 +8,11 @@ import torch
 from torch.utils.data import Dataset
 import torchvision
 
-import oss2
 from io import BytesIO
 from dataset.utils import pre_caption, load_jsonl
 
 from .video_utils.utils import read_frames_decord, read_from_tar
-from .video_utils.oss_info import OSS_INFO
+# from .video_utils.oss_info import OSS_INFO
 
 class pretrain_dataset_video(Dataset):
     def __init__(self, ann_file, transform, video_path, num_frames=8, max_words=30, read_local_data=True):
@@ -27,6 +26,7 @@ class pretrain_dataset_video(Dataset):
 
         self.read_local_data = read_local_data
         if not self.read_local_data:
+            import oss2
             bucket_name = "xdp-expriment"
             auth = oss2.Auth(OSS_INFO[bucket_name]["AK"], OSS_INFO[bucket_name]["SK"])
             self.bucket = oss2.Bucket(auth, OSS_INFO[bucket_name]["ENDPOINT"], bucket_name)
@@ -124,6 +124,7 @@ class pretrain_eval_dataset_video(Dataset):
                 txt_id += 1
 
         if not self.read_local_data:
+            import oss2
             bucket_name = "nlp-mind"
             auth = oss2.Auth(OSS_INFO[bucket_name]["AK"], OSS_INFO[bucket_name]["SK"])
             self.bucket = oss2.Bucket(auth, OSS_INFO[bucket_name]["ENDPOINT"], bucket_name)

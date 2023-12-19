@@ -6,8 +6,6 @@ from PIL import ImageFile
 from torch.utils.data import Dataset
 from dataset.utils import pre_question
 
-import oss2
-from io import BytesIO
 ImageFile.LOAD_TRUNCATED_IMAGES = True
 Image.MAX_IMAGE_PIXELS = None
 
