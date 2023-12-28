@@ -454,13 +454,15 @@ def main(args, config, ds_init):
         args.weight_decay, args.weight_decay, args.epochs, num_training_steps_per_epoch)
     print("Max WD = %.7f, Min WD = %.7f" % (max(wd_schedule_values), min(wd_schedule_values)))
 
-    # sim_val_v2t, sim_val_t2v = evaluation(model_without_ddp, val_loader, tokenizer, device, config)
-    # val_stats = {"sim_{}".format(k): v for k, v in itm_eval(sim_val_v2t, sim_val_t2v, val_loader.dataset.txt2vid, val_loader.dataset.vid2txt).items()}
-    # print(val_stats)
+    if args.evaluate_only:
+        sim_val_v2t, sim_val_t2v = evaluation(model_without_ddp, val_loader, tokenizer, device, config)
+        val_stats = {"sim_{}".format(k): v for k, v in itm_eval(sim_val_v2t, sim_val_t2v, val_loader.dataset.txt2vid, val_loader.dataset.vid2txt).items()}
+        print("Validation Performance:", val_stats)
 
-    # sim_test_v2t, sim_test_t2v = evaluation(model_without_ddp, test_loader, tokenizer, device, config)
-    # test_stats = {"sim_{}".format(k): v for k, v in itm_eval(sim_test_v2t, sim_test_t2v, test_loader.dataset.txt2vid, test_loader.dataset.vid2txt).items()}
-    # print("Test Performance:", test_stats)
+        sim_test_v2t, sim_test_t2v = evaluation(model_without_ddp, test_loader, tokenizer, device, config)
+        test_stats = {"sim_{}".format(k): v for k, v in itm_eval(sim_test_v2t, sim_test_t2v, test_loader.dataset.txt2vid, test_loader.dataset.vid2txt).items()}
+        print("Test Performance:", test_stats)
+        return
 
     max_epochs = args.epochs
     start_epoch = 0
@@ -557,6 +559,8 @@ if __name__ == '__main__':
                         action='store_true', default=False)
     parser.add_argument('--zero_stage', default=1, type=int,
                         help='ZeRO optimizer stage (default: 0)')
+    parser.add_argument('--evaluate_only',
+                        action='store_true', default=False)
 
     known_args, _ = parser.parse_known_args()
 

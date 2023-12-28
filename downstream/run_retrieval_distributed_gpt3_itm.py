@@ -454,13 +454,14 @@ def main(args, config, ds_init):
         args.weight_decay, args.weight_decay, args.epochs, num_training_steps_per_epoch)
     print("Max WD = %.7f, Min WD = %.7f" % (max(wd_schedule_values), min(wd_schedule_values)))
 
-    # gen_val_v2t, gen_val_t2v, cls_val_v2t, cls_val_t2v = evaluation(model_without_ddp, val_loader, tokenizer, device, config)
-    # val_stats = {"gen_{}".format(k): v for k, v in itm_eval(gen_val_v2t, gen_val_t2v, val_loader.dataset.txt2vid, val_loader.dataset.vid2txt).items()}
-    # val_stats.update(
-    #     {"gen_{}".format(k): v for k, v in itm_eval(cls_val_v2t, cls_val_t2v, val_loader.dataset.txt2vid, val_loader.dataset.vid2txt).items()}
-    #     )
-    # print(val_stats)
-
+    if args.evaluate_only:
+        gen_val_v2t, gen_val_t2v, cls_val_v2t, cls_val_t2v = evaluation(model_without_ddp, val_loader, tokenizer, device, config)
+        val_stats = {"gen_{}".format(k): v for k, v in itm_eval(gen_val_v2t, gen_val_t2v, val_loader.dataset.txt2vid, val_loader.dataset.vid2txt).items()}
+        val_stats.update(
+            {"gen_{}".format(k): v for k, v in itm_eval(cls_val_v2t, cls_val_t2v, val_loader.dataset.txt2vid, val_loader.dataset.vid2txt).items()}
+            )
+        print("Validation Performance:", val_stats)
+        return
 
     max_epochs = args.epochs
     start_epoch = 0
@@ -567,6 +568,8 @@ if __name__ == '__main__':
                         action='store_true', default=False)
     parser.add_argument('--zero_stage', default=1, type=int,
                         help='ZeRO optimizer stage (default: 0)')
+    parser.add_argument('--evaluate_only',
+                        action='store_true', default=False)
 
     known_args, _ = parser.parse_known_args()
 

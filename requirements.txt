@@ -9,3 +9,5 @@ more_itertools
 colorlog
 jieba
 addict
+pycocotools
+pycocoevalcap

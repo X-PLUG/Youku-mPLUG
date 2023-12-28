@@ -1,11 +1,10 @@
-train_file: 'youku_ret_train_verified.jsonl'
+train_file: 'youku_ret_train.jsonl'
 val_file: 'youku_ret_val.jsonl'
 test_file: 'youku_ret_test.jsonl'
 
 read_local_data: true
 
-# train_video_root: "/youku_data/data/raw_videos/"
-video_root: "retrieval_data"
+video_root: "path/to/videos/retrieval/"
 
 text_decoder: 'nlp_gpt3_text-generation_2.7B/'
 text_cfg: configs/models/config_gpt3_2.7B.json

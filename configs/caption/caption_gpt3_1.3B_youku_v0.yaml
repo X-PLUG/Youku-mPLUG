@@ -1,11 +1,10 @@
-train_file: 'youku_caption_train_v1.jsonl'
-val_file: 'youku_caption_val_v1.jsonl'
-test_file: 'youku_caption_test_v1.jsonl'
+train_file: 'youku_caption_train.jsonl'
+val_file: 'youku_caption_val.jsonl'
+test_file: 'youku_caption_test.jsonl'
 
 read_local_data: true
 
-# video_root: "/youku_data/data/raw_videos/"
-video_root: "caption_data"
+video_root: "path/to/videos/caption/"
 
 text_decoder: 'nlp_gpt3_text-generation_1.3B/'
 text_cfg: configs/models/config_gpt3_1.3B.json

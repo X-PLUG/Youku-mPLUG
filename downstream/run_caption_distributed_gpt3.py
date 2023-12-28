@@ -36,8 +36,8 @@ from optim.optim_factory import get_parameter_groups
 import random
 
 import re
-from evalcap.coco_caption.pycocotools.coco import COCO
-from evalcap.coco_caption.pycocoevalcap.eval import COCOEvalCap
+from pycocotools.coco import COCO
+from pycocoevalcap.eval import COCOEvalCap
 
 import warnings
 warnings.filterwarnings("ignore")

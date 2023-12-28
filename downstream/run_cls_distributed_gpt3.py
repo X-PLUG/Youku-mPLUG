@@ -384,7 +384,7 @@ def main(args, config, ds_init):
     max_epochs = args.epochs
     start_epoch = 0
     
-    if not args.no_zero_shot:
+    if args.evaluate_only:
         val_stats = evaluation(model, val_loader, tokenizer, device, config)
         print("Validation Performance:", val_stats)
 
@@ -401,7 +401,7 @@ def main(args, config, ds_init):
                 log_writer.flush()
             with open(os.path.join(args.output_dir, "log.txt"), mode="a", encoding="utf-8") as f:
                 f.write(json.dumps(log_stats) + "\n")
-
+        return
 
     print(f"Start training for {max_epochs} epochs")
     start_time = time.time()
@@ -503,7 +503,7 @@ if __name__ == '__main__':
     # Other
     parser.add_argument('--update_freq', default=1, type=int)
     parser.add_argument('--bf16', action='store_true')
-    parser.add_argument('--no_zero_shot', action='store_true')
+    parser.add_argument('--evaluate_only', action='store_true', default=False)
     parser.add_argument('--save_ckpt_freq', default=1, type=int)
     parser.add_argument('--enable_deepspeed',
                         action='store_true', default=False)
