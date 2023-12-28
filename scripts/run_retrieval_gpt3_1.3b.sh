@@ -11,5 +11,5 @@ python -m torch.distributed.launch --nproc_per_node=8 --master_addr=$MASTER_ADDR
   --resume path/to/1_3B_mp_rank_00_model_states.pt \
   --bf16
   2>&1 | tee ./output/${exp_name}/train.log
-# For testing, add the following line, and change the 'resume' option to the corresponding checkpoint.
-#   --evaluate_only \
+# For testing, set nproc_per_node=1, add "--evaluate_only", and change the 'resume' option to the corresponding checkpoint.
+# Also, set model_parallel_size=1 and tensor_model_parallel_size=1 in the corresponding config file.

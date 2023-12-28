@@ -1,10 +1,10 @@
-train_file: 'youku_cls_train.jsonl'
-val_file: 'youku_cls_val.jsonl'
-test_file: 'youku_cls_test.jsonl'
+train_file: 'classification_train.csv'
+val_file: 'classification_val.csv'
+test_file: 'classification_test.csv'
 
 read_local_data: true
 
-video_root: "path/to/videos/classification/"
+video_root: "parent_directory_of_videos/"
 
 text_decoder: 'nlp_gpt3_text-generation_2.7B/'
 text_cfg: configs/models/config_gpt3_2.7B.json

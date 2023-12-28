@@ -8,6 +8,7 @@ import torch
 from torch.utils.data import Dataset
 import torchvision
 
+import pandas as pd
 from io import BytesIO
 from dataset.utils import pre_caption, load_jsonl
 
@@ -18,7 +19,11 @@ class pretrain_dataset_video(Dataset):
     def __init__(self, ann_file, transform, video_path, num_frames=8, max_words=30, read_local_data=True):
         self.ann = []
         for f in ann_file:
-            self.ann += json.load(open(f,'r'))
+            if '.csv' in f:
+                df = pd.read_csv(f)
+                self.ann += [{'video_id': video_id, 'caption': title} for video_id, title in zip(df['video_id:FILE'], df['title'])]
+            else:
+                self.ann += json.load(open(f,'r'))
         self.video_path = video_path
         self.max_words = max_words
         self.num_frames = num_frames
@@ -100,7 +105,11 @@ class pretrain_dataset_video(Dataset):
 
 class pretrain_eval_dataset_video(Dataset):
     def __init__(self, ann_file, transform, video_path, num_frames=8, max_words=30, read_local_data=True):
-        self.ann = json.load(open(ann_file, 'r'))
+        if '.csv' in ann_file:
+            df = pd.read_csv(ann_file)
+            self.ann = [{'video_id': video_id, 'caption': title} for video_id, title in zip(df['video_id:FILE'], df['title'])]
+        else:
+            self.ann = json.load(open(ann_file, 'r'))
         self.transform = transform
         self.video_path = video_path
         self.max_words = max_words

@@ -10,6 +10,7 @@ from torch.utils.data import Dataset
 from dataset.utils import pre_caption, pre_question, load_jsonl
 from .video_utils.utils import read_frames_decord, read_frames_gif
 # from .video_utils.oss_info import OSS_INFO
+import pandas as pd
 
 
 '''
@@ -32,7 +33,11 @@ def preprocess_para_retrieval_data(anno_list):
 class video_retrieval_dataset_train(Dataset):
     def __init__(self, ann_file, transform, video_root, num_frames=4, max_words=80, has_multi_vision_gt=False,
                  is_paragraph_retrieval=False, read_local_data=True, has_extension=True):
-        self.ann = load_jsonl(ann_file)
+        if '.csv' in ann_file:
+            df = pd.read_csv(ann_file)
+            self.ann = [{'clip_name': clip_name, 'caption': caption} for clip_name, caption in zip(df['clip_name:FILE'], df['caption'])]
+        else:
+            self.ann = load_jsonl(ann_file)
         self.transform = transform
         self.video_root = video_root
         self.max_words = max_words
@@ -112,7 +117,11 @@ class video_retrieval_dataset_train(Dataset):
 class video_retrieval_dataset_eval(Dataset):
     def __init__(self, ann_file, transform, video_root, num_frames=8, max_words=80, has_multi_vision_gt=False,
                  is_paragraph_retrieval=False, read_local_data=True, has_extension=True):
-        self.ann = load_jsonl(ann_file)
+        if '.csv' in ann_file:
+            df = pd.read_csv(ann_file)
+            self.ann = [{'clip_name': clip_name, 'caption': caption} for clip_name, caption in zip(df['clip_name:FILE'], df['caption'])]
+        else:
+            self.ann = load_jsonl(ann_file)
         self.transform = transform
         self.video_root = video_root
         self.max_words = max_words
@@ -325,7 +334,14 @@ jsonl format [
 class video_caption_dataset(Dataset):
     def __init__(self, ann_file, transform, video_root, num_frames=16,
                 split='train', max_words=80, read_local_data=True, has_extension=True):
-        self.ann = load_jsonl(ann_file)
+        if '.csv' in ann_file:
+            df = pd.read_csv(ann_file)
+            if split == 'train':
+                self.ann = [{'video_id': video_id, 'caption': golden_caption} for video_id, golden_caption in zip(df['video_id:FILE'], df['golden_caption'])]
+            else:
+                self.ann = [{'video_id': video_id, 'golden_caption': golden_caption} for video_id, golden_caption in zip(df['video_id:FILE'], df['golden_caption'])]
+        else:
+            self.ann = load_jsonl(ann_file)
         self.transform = transform
         self.max_words = max_words
         self.video_root = video_root
@@ -392,14 +408,21 @@ jsonl format [
     
 class video_cls_dataset(Dataset):
     def __init__(self, ann_file, transform, video_root, num_frames=16, max_words=80, train=True, read_local_data=True):
-        self.ann = load_jsonl(ann_file)
+        self.label2idx = json.load(open('classname.json', 'r'))
+        if '.csv' in ann_file:
+            df = pd.read_csv(ann_file)
+            if df['label'].isnull().all():
+                self.ann = [{'video_id': video_id, 'caption': title, 'label': -1} for video_id, title in zip(df['video_id:FILE'], df['title'])]
+            else:
+                self.ann = [{'video_id': video_id, 'caption': title, 'label': self.label2idx[label]} for video_id, title, label in zip(df['video_id:FILE'], df['title'], df['label'])]
+        else:
+            self.ann = load_jsonl(ann_file)
         self.transform = transform
         self.max_words = max_words
         self.video_root = video_root
         self.num_frames = num_frames
         self.read_local_data = True
         self.train = train
-        self.label2idx = json.load(open('/'.join(ann_file.split('/')[:-1] + ['classname.json'])))
         self.idx2label = {v:k for k,v in self.label2idx.items()}
 
     def __len__(self):

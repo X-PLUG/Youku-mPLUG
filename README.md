@@ -50,27 +50,7 @@ The dataset contains 10 million videos in total, which are of high quality and d
 
 
 ## Download
-You can download all the videos through this [link](https://modelscope.cn/datasets/modelscope/Youku-AliceMind/summary) 
-
-Note: The annotation files on ModelScope are in .csv format and need to be converted to .jsonl format before use.
-```
-# youku_pretrain.jsonl
-{'video_id': video_id:FILE, 'caption': title}
-
-# classification
-# youku_cls_train.jsonl / youku_cls_val.jsonl / youku_cls_test.jsonl
-{'video_id': video_id:FILE, 'caption': title, 'label': label}
-
-# caption 
-# youku_caption_train.jsonl
-{'video_id': video_id:FILE, 'caption': golden_caption}
-# youku_caption_val.jsonl / youku_caption_test.jsonl
-{'video_id': video_id:FILE, 'golden_caption': golden_caption}
-
-# retrieval
-# youku_ret_train.jsonl / youku_ret_val.jsonl / youku_ret_test.jsonl
-{'clip_name': clip_name:FILE, 'caption': caption}
-```
+You can download all the videos and annotation files through this [link](https://modelscope.cn/datasets/modelscope/Youku-AliceMind/summary) 
 
 ## mPLUG-Video (1.3B / 2.7B)
 ### Pre-train
@@ -108,8 +88,6 @@ python -m torch.distributed.launch --nproc_per_node=8 --master_addr=$MASTER_ADDR
   --resume path/to/1_3B_mp_rank_00_model_states.pt \
   --bf16
   2>&1 | tee ./output/${exp_name}/train.log
-# For testing, add the following line, and change the 'resume' option to the corresponding checkpoint.
-#   --evaluate_only \
 ```
 
 ## mPLUG-Video (BloomZ-7B)

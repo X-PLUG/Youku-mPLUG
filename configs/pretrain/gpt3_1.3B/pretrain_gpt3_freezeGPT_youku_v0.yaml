@@ -1,9 +1,9 @@
 train_file: [
-  youku_pretrain.jsonl
+  pretrain.csv
 ]
 read_local_data: true
 
-train_video_root: "path/to/videos/pretrain/"
+train_video_root: "parent_directory_of_videos/"
 
 text_decoder: 'nlp_gpt3_text-generation_1.3B/'
 text_cfg: configs/models/config_gpt3_1.3B.json
