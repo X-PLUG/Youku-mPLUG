@@ -290,7 +290,7 @@ def cal_metric(result_file):
 
     coco = COCO(label_file_coco)
     cocoRes = coco.loadRes(res_file_coco)
-    cocoEval = COCOEvalCap(coco, cocoRes, 'corpus')
+    cocoEval = COCOEvalCap(coco, cocoRes)
 
     cocoEval.params['image_id'] = cocoRes.getImgIds()
 
@@ -419,18 +419,17 @@ def main(args, config, ds_init):
 
     if args.evaluate_only:
         val_caption_result = evaluation(model, val_loader, tokenizer, device, config)
-        val_result_file = save_result(val_caption_result, args.result_dir, 'val_caption_result_zs')
+        val_result_file = save_result(val_caption_result, args.result_dir, 'val_caption_result')
         val_stats = cal_metric(val_result_file)
 
-        test_caption_result = evaluation(model, test_loader, tokenizer, device, config)
-        test_result_file = save_result(test_caption_result, args.result_dir, 'test_caption_result_zs')
-        test_stats = cal_metric(test_result_file)
+        # test_caption_result = evaluation(model, test_loader, tokenizer, device, config)
+        # test_result_file = save_result(test_caption_result, args.result_dir, 'test_caption_result_zs')
+        # test_stats = cal_metric(test_result_file)
 
         print('* Validation Stats:', val_stats)
-        print('* Test Stats:', test_stats)
+        # print('* Test Stats:', test_stats)
 
         log_stats = {**{f'val_{k}': v for k, v in val_stats.items()},
-                        **{f'test_{k}': v for k, v in test_stats.items()},
                         'n_parameters': n_parameters}
         
         if args.output_dir and utils.is_main_process():

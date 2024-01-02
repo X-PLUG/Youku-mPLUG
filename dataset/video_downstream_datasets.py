@@ -11,6 +11,7 @@ from dataset.utils import pre_caption, pre_question, load_jsonl
 from .video_utils.utils import read_frames_decord, read_frames_gif
 # from .video_utils.oss_info import OSS_INFO
 import pandas as pd
+import ast
 
 
 '''
@@ -339,7 +340,10 @@ class video_caption_dataset(Dataset):
             if split == 'train':
                 self.ann = [{'video_id': video_id, 'caption': golden_caption} for video_id, golden_caption in zip(df['video_id:FILE'], df['golden_caption'])]
             else:
-                self.ann = [{'video_id': video_id, 'golden_caption': golden_caption} for video_id, golden_caption in zip(df['video_id:FILE'], df['golden_caption'])]
+                if df['golden_caption'].isnull().all():
+                    self.ann = [{'video_id': video_id, 'golden_caption': golden_caption} for video_id, golden_caption in zip(df['video_id:FILE'], df['golden_caption'])]
+                else:
+                    self.ann = [{'video_id': video_id, 'golden_caption': ast.literal_eval(golden_caption)} for video_id, golden_caption in zip(df['video_id:FILE'], df['golden_caption'])]
         else:
             self.ann = load_jsonl(ann_file)
         self.transform = transform

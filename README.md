@@ -52,6 +52,17 @@ The dataset contains 10 million videos in total, which are of high quality and d
 ## Download
 You can download all the videos and annotation files through this [link](https://modelscope.cn/datasets/modelscope/Youku-AliceMind/summary) 
 
+## Setup
+Note: Due to a bug in megatron_util, after installing megatron_util, it is necessary to replace *conda/envs/youku/lib/python3.10/site-packages/megatron_util/initialize.py* with the *initialize.py* in the current directory.
+```
+conda env create -f environment.yml
+conda activate youku
+pip install megatron_util==1.3.0 -f https://modelscope.oss-cn-beijing.aliyuncs.com/releases/repo.html
+
+# For caption evaluation
+apt-get install default-jre
+```
+
 ## mPLUG-Video (1.3B / 2.7B)
 ### Pre-train
 First you should download GPT-3 1.3B & 2.7B checkpoint from [Modelscope](https://www.modelscope.cn/models/damo/nlp_gpt3_text-generation_1.3B/summary). The pre-trained model can be downloaded [Here (1.3B)](http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/1_3B_mp_rank_00_model_states.pt) and [Here (2.7B)](http://mm-chatgpt.oss-cn-zhangjiakou.aliyuncs.com/2_7B_mp_rank_00_model_states.pt).
