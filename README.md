@@ -101,6 +101,13 @@ python -m torch.distributed.launch --nproc_per_node=8 --master_addr=$MASTER_ADDR
   2>&1 | tee ./output/${exp_name}/train.log
 ```
 
+### Experimental results
+Below we show the results on the validation sets for reference.
+<p align="left">
+<img src="assets/val_cls.jpg" alt="Video category prediction results on the validation set." width="70%"/>
+<img src="assets/val_retrieval.jpg" alt="Video retrieval results on the validation set." width="70%"/>
+</p>
+
 ## mPLUG-Video (BloomZ-7B)
 We build the mPLUG-Video model based on [mPLUG-Owl](https://github.com/X-PLUG/mPLUG-Owl). To use the model, you should first clone the mPLUG-Owl repo as 
 ```bash
